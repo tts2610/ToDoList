@@ -69,7 +69,7 @@ $('#toDoList').click(function() {
         $(this).parent().parent().find("#content").css("text-decoration", "none");
     });
     if ($("#filtering").length) {
-        showDoneOrNotDone();
+        alert("aaaaa");
     }
 });
 
