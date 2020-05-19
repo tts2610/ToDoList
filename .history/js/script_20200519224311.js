@@ -75,6 +75,7 @@ function updateToDoListForCheckedBox(i) {
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
+    console.log(toDoList);
     saveLocalStorage();
 }
 

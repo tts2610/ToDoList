@@ -28,7 +28,6 @@ $("#submitTo").click(function(params) {
 })
 
 function reset() {
-    getLocalStorage();
     updateDashboard(toDoList);
 }
 
@@ -71,7 +70,6 @@ $('#toDoList').click(function() {
 });
 
 function updateToDoListForCheckedBox(i) {
-    alert(i);
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
@@ -133,6 +131,7 @@ function removeHistory(i) {
     historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
+
 }
 
 function showDoneOrNotDone() {

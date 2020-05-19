@@ -22,15 +22,10 @@ $("#submitTo").click(function(params) {
     toDoList.push({ isDone: false, content: input });
     saveLocalStorage();
     updateDashboard(toDoList);
-    $("#todoInput").val('')
     $("#todoInput").focus();
 
 })
 
-function reset() {
-    getLocalStorage();
-    updateDashboard(toDoList);
-}
 
 
 function updateDashboard(myList) {
@@ -40,18 +35,18 @@ function updateDashboard(myList) {
         let html;
         if (x.isDone) {
             html = '\
-                <div class="row mt-2">\
-                    <div class="col-sm-1"><input class="form-check-input myCheckbox" type="checkbox" name="todo" id="' + i + '" checked></div>\
-                    <div class="col-sm-4" style="text-align:left; text-decoration:line-through" id="content">' + x.content + '</div>\
-                    <div class="col-sm-2" onclick="deleteVal(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
-                </div>'
+            <div class="row mt-2">\
+                <div class="col-sm-1"><input class="form-check-input myCheckbox" type="checkbox" name="todo" id="' + i + '" checked></div>\
+                <div class="col-sm-4" style="text-align:left; text-decoration:line-through" id="content">' + x.content + '</div>\
+                <div class="col-sm-2" onclick="deleteVal(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
+            </div>'
         } else {
             html = '\
-                <div class="row mt-2">\
-                    <div class="col-sm-1"><input class="form-check-input myCheckbox" type="checkbox" name="todo" id="' + i + '"></div>\
-                    <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
-                    <div class="col-sm-2" onclick="deleteVal(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
-                </div>'
+            <div class="row mt-2">\
+                <div class="col-sm-1"><input class="form-check-input myCheckbox" type="checkbox" name="todo" id="' + i + '"></div>\
+                <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
+                <div class="col-sm-2" onclick="deleteVal(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
+            </div>'
         }
         div.append(html);
     })
@@ -60,7 +55,10 @@ function updateDashboard(myList) {
 $('#toDoList').click(function() {
     $.each($("input[name='todo']:checked"), function() {
         updateToDoListForCheckedBox($(this).attr("id"));
+
         $(this).parent().parent().find("#content").css("text-decoration", "line-through");
+
+        console.log(toDoList);
     });
 
     $.each($("input[name='todo']:not(:checked)"), function() {
@@ -68,10 +66,10 @@ $('#toDoList').click(function() {
         $(this).parent().parent().find("#content").css("text-decoration", "none");
     });
 
+    updateDashboard();
 });
 
 function updateToDoListForCheckedBox(i) {
-    alert(i);
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
@@ -114,7 +112,7 @@ function updateHistoryBoard() {
     <div class="row mt-2">\
         <div class="col-sm-2" onclick="revert(' + i + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
         <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
-        <div class="col-sm-1" onclick="removeHistory(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;" ></div>\
+        <div class="col-sm-1" onclick="removeHistory(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
     </div>'
         div.append(html);
     })
@@ -129,18 +127,18 @@ function revert(i) {
 }
 
 function removeHistory(i) {
-    confirm("This will remove permanently your item! Are you sure to continue?");
     historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
+
 }
 
 function showDoneOrNotDone() {
-    $("historyList").append('<div id="filtering"></div>')
-    saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
     console.log(arr);
+    saveLocalStorage();
     updateDashboard(arr);
+
 }
 
 function saveLocalStorage() {

@@ -4,7 +4,7 @@
     border-radius: 15px;
 }
 
-.form-inline {
+form-inline {
     display: flex;
     justify-content: center;
     flex-direction: row;

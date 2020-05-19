@@ -71,10 +71,10 @@ $('#toDoList').click(function() {
 });
 
 function updateToDoListForCheckedBox(i) {
-    alert(i);
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
+    console.log(toDoList);
     saveLocalStorage();
 }
 

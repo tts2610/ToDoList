@@ -28,7 +28,6 @@ $("#submitTo").click(function(params) {
 })
 
 function reset() {
-    getLocalStorage();
     updateDashboard(toDoList);
 }
 
@@ -59,7 +58,10 @@ function updateDashboard(myList) {
 
 $('#toDoList').click(function() {
     $.each($("input[name='todo']:checked"), function() {
-        updateToDoListForCheckedBox($(this).attr("id"));
+
+        updateToDoListForCheckedBox($(this).attr("id"), $("#filtering").length ? 1 : 0);
+
+
         $(this).parent().parent().find("#content").css("text-decoration", "line-through");
     });
 
@@ -70,12 +72,17 @@ $('#toDoList').click(function() {
 
 });
 
-function updateToDoListForCheckedBox(i) {
-    alert(i);
+function updateToDoListForCheckedBox(i, isFiltered) {
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
     saveLocalStorage();
+    if (isFiltered) {
+        console.log(toDoList);
+        let arr = toDoList.filter(x => x.isDone == false);
+        updateDashboard(arr);
+    }
+
 }
 
 function updateToDoListForUnCheckedBox(i) {
@@ -133,14 +140,15 @@ function removeHistory(i) {
     historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
+
 }
 
 function showDoneOrNotDone() {
-    $("historyList").append('<div id="filtering"></div>')
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
     console.log(arr);
     updateDashboard(arr);
+    $('#toDoList').append('<div id="filtering"></div>');
 }
 
 function saveLocalStorage() {

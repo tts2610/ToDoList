@@ -5,7 +5,7 @@ let input;
 $(document).ready(function() {
     $("#todoInput").focus();
     getLocalStorage();
-    updateDashboard(toDoList);
+    updateDashboard(toDoList, 0);
     updateHistoryBoard();
     $('#delete').click(deleteVal);
 })
@@ -21,21 +21,21 @@ $("#submitTo").click(function(params) {
     input = $("#todoInput").val();
     toDoList.push({ isDone: false, content: input });
     saveLocalStorage();
-    updateDashboard(toDoList);
+    updateDashboard(toDoList, 0);
     $("#todoInput").val('')
     $("#todoInput").focus();
 
 })
 
 function reset() {
-    getLocalStorage();
-    updateDashboard(toDoList);
+    updateDashboard(toDoList, 0);
 }
 
 
-function updateDashboard(myList) {
+function updateDashboard(myList, isFiltered) {
     let div = $("#toDoList");
     div.empty();
+    $("#filtering").remove();
     myList.forEach((x, i) => {
         let html;
         if (x.isDone) {
@@ -55,6 +55,10 @@ function updateDashboard(myList) {
         }
         div.append(html);
     })
+    if (isFiltered) {
+        html = "<div id='filtering'></div>"
+        div.append(html);
+    }
 }
 
 $('#toDoList').click(function() {
@@ -68,10 +72,14 @@ $('#toDoList').click(function() {
         $(this).parent().parent().find("#content").css("text-decoration", "none");
     });
 
+    if ($("#filtering").length) {
+        let arr = toDoList.filter(x => x.isDone == false);
+        updateDashboard(arr, 0);
+    }
+
 });
 
 function updateToDoListForCheckedBox(i) {
-    alert(i);
     if (!toDoList[i].isDone) {
         toDoList[i].isDone = true;
     }
@@ -91,7 +99,7 @@ function deleteVal(i) {
     updateHistoryBoard();
 
     toDoList.splice(i, 1);
-    updateDashboard(toDoList);
+    updateDashboard(toDoList, 0);
 
     saveLocalStorage();
 }
@@ -122,7 +130,7 @@ function updateHistoryBoard() {
 
 function revert(i) {
     insertToDo(historyList[i]);
-    updateDashboard(toDoList);
+    updateDashboard(toDoList, 0);
     historyList.splice(i, 1);
     updateHistoryBoard();
     saveLocalStorage();
@@ -133,14 +141,15 @@ function removeHistory(i) {
     historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
+
 }
 
 function showDoneOrNotDone() {
-    $("historyList").append('<div id="filtering"></div>')
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
     console.log(arr);
-    updateDashboard(arr);
+    updateDashboard(arr, 1);
+
 }
 
 function saveLocalStorage() {
