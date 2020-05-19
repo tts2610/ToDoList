@@ -86,9 +86,9 @@ function updateHistoryBoard() {
     historyList.forEach((x, i) => {
         let html = '\
     <div class="row mt-2">\
-        <div class="col-sm-2" onclick="revert(' + i + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
+        <div class="col-sm-1" onclick="removeHistory(' + i + ')"><input class="form-check-input" type="checkbox" name="todo"></div>\
         <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
-        <div class="col-sm-1" onclick="removeHistory(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;"></div>\
+        <div class="col-sm-2" onclick="revert(' + i + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
     </div>'
         div.append(html);
     })
