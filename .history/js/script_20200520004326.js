@@ -176,7 +176,7 @@ function saveLocalStorage() {
 function getLocalStorage() {
     toDoList = JSON.parse(localStorage.getItem("toDoList") || "[]");
     if (toDoList.length == 0) {
-        toDoList = [{ id: 0, isDone: false, content: 'Go to CoderSchool' }, { id: 1, isDone: true, content: 'Have lunch' }, { id: 2, isDone: false, content: 'Go Home' }, { id: 3, isDone: true, content: 'Play Games' }];
+        toDoList = [{ id: 0, isDone: false, content: 'Go to CoderSchool' }, { id: 1 isDone: false, content: 'Have lunch' }, { id: 2, isDone: false, content: 'Go Home' }, { id: 3, isDone: false, content: 'Play Games' }];
     }
     historyList = JSON.parse(localStorage.getItem("historyList") || "[]");;
 }
