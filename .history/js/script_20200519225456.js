@@ -19,7 +19,7 @@ $(document).on('keypress', function(e) {
 
 $("#submitTo").click(function(params) {
     input = $("#todoInput").val();
-    toDoList.push({ id: (toDoList.length == 0 ? 0 : toDoList[toDoList.length - 1].id + 1), isDone: false, content: input });
+    toDoList.push({ id: toDoList.pop().id + 1, isDone: false, content: input });
     saveLocalStorage();
     updateDashboard(toDoList);
     $("#todoInput").val('')
@@ -34,7 +34,6 @@ function reset() {
 
 
 function updateDashboard(myList) {
-    console.log(myList);
     let div = $("#toDoList");
     div.empty();
     myList.forEach((x, i) => {
@@ -85,7 +84,7 @@ function updateToDoListForCheckedBox(i) {
 
 function updateToDoListForUnCheckedBox(i) {
     toDoList.forEach(element => {
-        if (element.id == i && element.isDone) {
+        if (element.id == i && !element.isDone) {
             element.isDone = false;
         }
     });
@@ -93,18 +92,13 @@ function updateToDoListForUnCheckedBox(i) {
 }
 
 function deleteVal(i) {
-    let tempIndex;
-    let tempDic;
-    toDoList.forEach((element, il) => {
-        if (element.id == i) {
-            tempDic = element;
-            tempIndex = il;
-        }
-    });
-    insertHistory({ content: tempDic.content, isDone: tempDic.isDone });
+
+    insertHistory(toDoList[i]);
     updateHistoryBoard();
-    toDoList.splice(tempIndex, 1);
+
+    toDoList.splice(i, 1);
     updateDashboard(toDoList);
+
     saveLocalStorage();
 }
 
@@ -121,32 +115,21 @@ function insertToDo(element) {
 function updateHistoryBoard() {
     let div = $("#historyList");
     div.empty();
-    if (historyList != null) {
-        historyList.forEach((x, i) => {
-            let html = '\
-        <div class="row mt-2">\
-            <div class="col-sm-2" onclick="revert(' + x.id + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
-            <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
-            <div class="col-sm-1" onclick="removeHistory(' + x.id + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;" ></div>\
-        </div>'
-            div.append(html);
-        })
-    }
-
+    historyList.forEach((x, i) => {
+        let html = '\
+    <div class="row mt-2">\
+        <div class="col-sm-2" onclick="revert(' + i + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
+        <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + '</div>\
+        <div class="col-sm-1" onclick="removeHistory(' + i + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;" ></div>\
+    </div>'
+        div.append(html);
+    })
 }
 
 function revert(i) {
-    let tempIndex;
-    let tempDic;
-    historyList.forEach((element, il) => {
-        if (element.id == i) {
-            tempDic = element;
-            tempIndex = il;
-        }
-    });
-    insertToDo({ id: (toDoList.length == 0 ? 0 : toDoList[toDoList.length - 1].id + 1), isDone: tempDic.isDone, content: tempDic.content });
+    insertToDo(historyList[i]);
     updateDashboard(toDoList);
-    historyList.splice(tempIndex, 1);
+    historyList.splice(i, 1);
     updateHistoryBoard();
     saveLocalStorage();
 }
@@ -161,8 +144,8 @@ function removeHistory(i) {
 function showDoneOrNotDone() {
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
+    console.log(arr);
     updateDashboard(arr);
-    $("#toDoList").append('<div id="filtering"></div>')
 }
 
 function saveLocalStorage() {

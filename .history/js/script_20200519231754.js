@@ -85,7 +85,7 @@ function updateToDoListForCheckedBox(i) {
 
 function updateToDoListForUnCheckedBox(i) {
     toDoList.forEach(element => {
-        if (element.id == i && element.isDone) {
+        if (element.id == i && !element.isDone) {
             element.isDone = false;
         }
     });
@@ -162,7 +162,6 @@ function showDoneOrNotDone() {
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
     updateDashboard(arr);
-    $("#toDoList").append('<div id="filtering"></div>')
 }
 
 function saveLocalStorage() {

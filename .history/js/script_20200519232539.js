@@ -162,7 +162,6 @@ function showDoneOrNotDone() {
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
     updateDashboard(arr);
-    $("#toDoList").append('<div id="filtering"></div>')
 }
 
 function saveLocalStorage() {

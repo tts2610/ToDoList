@@ -20,6 +20,7 @@ $(document).on('keypress', function(e) {
 $("#submitTo").click(function(params) {
     input = $("#todoInput").val();
     toDoList.push({ id: (toDoList.length == 0 ? 0 : toDoList[toDoList.length - 1].id + 1), isDone: false, content: input });
+    console.log(toDoList)
     saveLocalStorage();
     updateDashboard(toDoList);
     $("#todoInput").val('')
@@ -34,7 +35,6 @@ function reset() {
 
 
 function updateDashboard(myList) {
-    console.log(myList);
     let div = $("#toDoList");
     div.empty();
     myList.forEach((x, i) => {
@@ -85,7 +85,7 @@ function updateToDoListForCheckedBox(i) {
 
 function updateToDoListForUnCheckedBox(i) {
     toDoList.forEach(element => {
-        if (element.id == i && element.isDone) {
+        if (element.id == i && !element.isDone) {
             element.isDone = false;
         }
     });
@@ -161,8 +161,8 @@ function removeHistory(i) {
 function showDoneOrNotDone() {
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
+    console.log(arr);
     updateDashboard(arr);
-    $("#toDoList").append('<div id="filtering"></div>')
 }
 
 function saveLocalStorage() {
