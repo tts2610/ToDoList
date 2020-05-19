@@ -122,11 +122,10 @@ function updateHistoryBoard() {
     div.empty();
     if (historyList != null) {
         historyList.forEach((x, i) => {
-            let status = x.isDone ? "DONE" : "NOT DONE";
             let html = '\
         <div class="row mt-2">\
             <div class="col-sm-2" onclick="revert(' + x.id + ')"><img class="ml-2" src="img/revert.png" width="30" height="30" style="cursor:pointer;"></div>\
-            <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + ' - ' + status + '</div>\
+            <div class="col-sm-4" style="text-align:left;" id="content">' + x.content + ' - ' + x.isDone ? "Done" : "Not Done" + '</div>\
             <div class="col-sm-1" onclick="removeHistory(' + x.id + ')"><img class="ml-2" src="img/cross.png" width="25" height="25" style="cursor:pointer;" ></div>\
         </div>'
             div.append(html);
