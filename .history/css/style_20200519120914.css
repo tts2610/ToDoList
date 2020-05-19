@@ -1,0 +1,23 @@
+#questionBox {
+    width: 70%;
+    background-color: brown;
+    min-height: 250px;
+    border-radius: 15px;
+}
+
+#toDoList {
+    background-color: burlywood;
+    min-height: 120px;
+    border-radius: 15px;
+}
+
+#historyList {
+    background-color: chocolate;
+    min-height: 120px;
+    border-radius: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}

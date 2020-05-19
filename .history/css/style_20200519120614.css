@@ -1,0 +1,10 @@
+#questionBox {
+    width: 70%;
+    background-color: brown;
+    min-height: 250px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
