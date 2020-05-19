@@ -151,8 +151,8 @@ function revert(i) {
 }
 
 function removeHistory(i) {
-    if (confirm("This will remove permanently your item! Are you sure to continue?"))
-        historyList.splice(i, 1);
+    confirm("This will remove permanently your item! Are you sure to continue?");
+    historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
 }

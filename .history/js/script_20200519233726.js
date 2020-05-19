@@ -151,8 +151,8 @@ function revert(i) {
 }
 
 function removeHistory(i) {
-    if (confirm("This will remove permanently your item! Are you sure to continue?"))
-        historyList.splice(i, 1);
+    confirm("This will remove permanently your item! Are you sure to continue?");
+    historyList.splice(i, 1);
     saveLocalStorage();
     updateHistoryBoard();
 }
@@ -160,10 +160,10 @@ function removeHistory(i) {
 function showDoneOrNotDone() {
     saveLocalStorage();
     let arr = toDoList.filter(x => x.isDone == false);
-    updateDashboard(arr);
     if (!arr.length) {
         $("#toDoList").append("Congrats! You've done all your task!")
     }
+    updateDashboard(arr);
     $("#toDoList").append('<div id="filtering"></div>')
 }
 
